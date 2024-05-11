@@ -1,0 +1,22 @@
+A = R2 U2 R4 U2' R2
+A' = R2' U2 R4 U2' R2'
+
+(A R' A' R) y2 (A R' A' R) 
+(A F A' F')
+
+R U D'3 B -- DF -> DL -> BU [1]
+R U3 D3 F -- same as 1
+R U' D' F -- same as 1
+R U'2 R D -- same as 1
+R F'2 L D'3 -- FU -> DB -> DR [2]
+R B2 U4 L3 -- same as 2
+R B'2 R'3 F4 -- same as 2
+R4 F'3 L'2 F -- LU -> DR -> DB
+R4 B'3 R'2 B -- RU -> DL -> DF
+R'3 U4 F'2 L' -- FU -> DB -> DR rotates FD,LD,DF,DL (none in cycle)
+L U D'3 F -- FU -> DB -> DR  ALL+BD 
+D R' U2 R' -- FU -> DR -> DB 
+D' R' U2 R' -- FU -> DL -> DF DL,LD,FD,FU(seems to be useful)
+F3 U4 R2 B -- RU -> DL -> DF rotates BD,RD,DB,DR (none in cycle)
+F4 R3 B2 R' -- BU -> DF -> DL
+
