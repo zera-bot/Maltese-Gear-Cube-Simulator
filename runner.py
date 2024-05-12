@@ -52,12 +52,7 @@ while not stop:
         for k,v in cube.gears.items():
             #if v.rotation != 0: gearRots+=1
             if v.rotation == 180: gearRots+=1
-            if k != v: noGearsChanged = False; break
-        
-        if (gearRots%2 == 0 and gearRots != 0) and noGearsChanged:
-            print(seq)
-            print(gearRots)
-
+            if k != v: noGearsChanged = False
         # if it's a 3 cycle
         #if cornerChanges==0 and gearsChanges!=0 and gearsChanges<4:
         #    print(seq)
