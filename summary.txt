@@ -1,18 +1,2 @@
 
-R4 D R4 D' R4LD -> FD, RD -> BD, BD -> RD, FD -> LD, DR -> DB, DB -> DR; 
-R3 U3 L XL L' U'3 R'3 XL -- BU -> FR, LD -> FD, FR -> BU, LU -> RU, UB -> RF, RU -> LU, FD -> LD, RF -> UB, DR -> DB, DB -> DR; BD rotates 90; LU, RU rotates 180; RD rotates -90; 
-R3 D3 L XL L' D'3 R'3 XL -- UB -> FR, LD -> FD, RD -> BD, RF -> BL, BD -> RD, BL -> RF, FD -> LD, FR -> UB, UF -> DF -> DL; DB rotates 90; UB, RF, BL, DL, FR, UF rotates 180; DR rotates -90; 
-R' U3 F' XL F U'3 R XL -- LD -> RU -> FD, FD -> LD -> RU, RU -> FD -> LD, DB -> FR -> DR; RD rotates 90; BD rotates -90; 
-R' D' B' XL B D R XL -- RF -> LD -> FD, RD -> BD, RB -> BL, BL -> RB, BD -> RD, LD -> FD -> RF, FD -> RF -> LD, DF -> FR -> DL; DR rotates 90; DF, FD, RF, FR rotates 180; DB rotates -90; 
-L3 U3 R XL R' U'3 L'3 XL -- BL -> FU, RD -> BD, FU -> BL, LU -> RU, BD -> RD, RU -> LU, UF -> LB, LB -> UF, DR -> DB, DB -> DR; FD rotates 90; LU, RU rotates 180; LD rotates -90; 
-L3 D3 R XL R' D'3 L'3 XL -- LB -> FR, LD -> FD, RD -> BD, UF -> BL, BD -> RD, FR -> LB, FD -> LD, BL -> UF, DR -> UB -> DB; DF rotates 90; LB, UF, FR, BL, DR, UB rotates 180; DL rotates -90; 
-L' U3 B' XL B U'3 L XL -- RD -> LU -> BD, LU -> BD -> RD, BD -> RD -> LU, DF -> BL -> DL; LD rotates 90; FD rotates -90; 
-L' D' F' XL F D L XL -- LF -> FR, LD -> FD, LB -> RD -> BD, BD -> LB -> RD, RD -> BD -> LB, FD -> LD, FR -> LF, DB -> BL -> DR; DL rotates 90; DB, LB, BD, BL rotates 180; DF rotates -90; 
-F U'3 R XL R' U3 F' XL -- RD -> BD -> FU, FU -> RD -> BD, BD -> FU -> RD, DL -> RF -> DF; LD rotates 90; FD rotates -90; 
-F D L XL L' D' F' XL -- BD -> RD -> FR, LD -> FD, LB -> FL, RD -> FR -> BD, FR -> BD -> RD, FL -> LB, FD -> LD, RF -> DB -> DR; DL rotates 90; RD, FR, DR, RF rotates 180; DF rotates -90; 
-F'3 U'3 B' XL B U3 F3 XL -- BU -> FU, UL -> FR, FU -> BU, RD -> BD, BD -> RD, LU -> RF, RF -> LU, FR -> UL, DR -> DB, DB -> DR; FD rotates 90; BU, FU rotates 180; LD rotates -90; 
-F'3 D'3 B' XL B D3 F3 XL -- LB -> FR, LD -> FD, RD -> BD, BD -> RD, UL -> RF, FR -> LB, FD -> LD, RF -> UL, DB -> UR -> DR; DF rotates 90; LB, UL, FR, DB, RF, UR rotates 180; DL rotates -90; 
-B U'3 L XL L' U3 B' XL -- BU -> LD -> FD, LD -> FD -> BU, FD -> BU -> LD, LB -> DB -> DR; RD rotates 90; BD rotates -90; 
-B D R XL R' D' B' XL -- LD -> BL -> FD, RF -> BR, RD -> BD, FD -> LD -> BL, BD -> RD, BR -> RF, BL -> FD -> LD, LB -> DF -> DL; DR rotates 90; BL, LD, DL, LB rotates 180; DB rotates -90; 
-B'3 U'3 F' XL F U3 B3 XL -- BU -> FU, LD -> FD, FU -> BU, UR -> BL, LB -> RU, RU -> LB, FD -> LD, BL -> UR, DR -> DB, DB -> DR; BD rotates 90; BU, FU rotates 180; RD rotates -90; 
-B'3 D'3 F' XL F D3 B3 XL -- LD -> FD, RD -> BD, RF -> BL, BD -> RD, BL -> RF, UR -> LB, FD -> LD, LB -> UR, UL -> DL -> DF; DB rotates 90; RF, BL, UR, LB, DF, UL rotates 180; DR rotates -90; 
+R F' R4 F R' XL R F' R'4 F R' XL -- BU -> DR -> DB; BU rotates 90; BD, RD rotates 180; DB rotates -90; 

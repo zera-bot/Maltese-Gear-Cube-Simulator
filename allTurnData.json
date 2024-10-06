@@ -1,0 +1,404 @@
+{
+    "R": {
+        "corners": [
+            "URF",
+            "URB",
+            "DRB",
+            "DRF"
+        ],
+        "pieces": [
+            [
+                "F",
+                "FU",
+                "U",
+                "BU",
+                "B",
+                "BD",
+                "D",
+                "FD"
+            ],
+            [
+                "RU",
+                "BR",
+                "RD",
+                "FR"
+            ]
+        ],
+        "gears": [
+            [
+                "FD",
+                "FU",
+                "UF",
+                "UB",
+                "BU",
+                "BD",
+                "DB",
+                "DF"
+            ],
+            [
+                "RF",
+                "RU",
+                "RB",
+                "RD"
+            ],
+            [
+                "FR",
+                "UR",
+                "BR",
+                "DR"
+            ]
+        ],
+        "pieceRot": {
+            "90": [
+                "R"
+            ]
+        },
+        "gearRot": {
+            "90": [
+                "FD",
+                "FU",
+                "UF",
+                "UB",
+                "BU",
+                "BD",
+                "DB",
+                "DF"
+            ]
+        }
+    },
+    "L": {
+        "corners": [
+            "ULB",
+            "ULF",
+            "DLF",
+            "DLB"
+        ],
+        "pieces": [
+            [
+                "B",
+                "BU",
+                "U",
+                "FU",
+                "F",
+                "FD",
+                "D",
+                "BD"
+            ],
+            [
+                "LU",
+                "FL",
+                "LD",
+                "BL"
+            ]
+        ],
+        "gears": [
+            [
+                "BD",
+                "BU",
+                "UB",
+                "UF",
+                "FU",
+                "FD",
+                "DF",
+                "DB"
+            ],
+            [
+                "LB",
+                "LU",
+                "LF",
+                "LD"
+            ],
+            [
+                "BL",
+                "UL",
+                "FL",
+                "DL"
+            ]
+        ],
+        "pieceRot": {
+            "90": [
+                "L"
+            ]
+        },
+        "gearRot": {
+            "90": [
+                "BD",
+                "BU",
+                "UB",
+                "UF",
+                "FU",
+                "FD",
+                "DF",
+                "DB"
+            ]
+        }
+    },
+    "U": {
+        "corners": [
+            "ULF",
+            "ULB",
+            "URB",
+            "URF"
+        ],
+        "pieces": [
+            [
+                "F",
+                "FL",
+                "L",
+                "BL",
+                "B",
+                "BR",
+                "R",
+                "FR"
+            ],
+            [
+                "LU",
+                "BU",
+                "RU",
+                "FU"
+            ]
+        ],
+        "gears": [
+            [
+                "FR",
+                "FL",
+                "LF",
+                "LB",
+                "BL",
+                "BR",
+                "RB",
+                "RF"
+            ],
+            [
+                "UF",
+                "UL",
+                "UB",
+                "UR"
+            ],
+            [
+                "FU",
+                "LU",
+                "BU",
+                "RU"
+            ]
+        ],
+        "pieceRot": {
+            "90": [
+                "U"
+            ]
+        },
+        "gearRot": {
+            "90": [
+                "FR",
+                "FL",
+                "LF",
+                "LB",
+                "BL",
+                "BR",
+                "RB",
+                "RF"
+            ]
+        }
+    },
+    "D": {
+        "corners": [
+            "DRF",
+            "DRB",
+            "DLB",
+            "DLF"
+        ],
+        "pieces": [
+            [
+                "F",
+                "FR",
+                "R",
+                "BR",
+                "B",
+                "BL",
+                "L",
+                "FL"
+            ],
+            [
+                "RD",
+                "BD",
+                "LD",
+                "FD"
+            ]
+        ],
+        "gears": [
+            [
+                "FL",
+                "FR",
+                "RF",
+                "RB",
+                "BR",
+                "BL",
+                "LB",
+                "LF"
+            ],
+            [
+                "DF",
+                "DR",
+                "DB",
+                "DL"
+            ],
+            [
+                "FD",
+                "RD",
+                "BD",
+                "LD"
+            ]
+        ],
+        "pieceRot": {
+            "90": [
+                "D"
+            ]
+        },
+        "gearRot": {
+            "90": [
+                "FL",
+                "FR",
+                "RF",
+                "RB",
+                "BR",
+                "BL",
+                "LB",
+                "LF"
+            ]
+        }
+    },
+    "F": {
+        "corners": [
+            "ULF",
+            "URF",
+            "DRF",
+            "DLF"
+        ],
+        "pieces": [
+            [
+                "L",
+                "LU",
+                "U",
+                "RU",
+                "R",
+                "RD",
+                "D",
+                "LD"
+            ],
+            [
+                "FU",
+                "FR",
+                "FD",
+                "FL"
+            ]
+        ],
+        "gears": [
+            [
+                "LD",
+                "LU",
+                "UL",
+                "UR",
+                "RU",
+                "RD",
+                "DR",
+                "DL"
+            ],
+            [
+                "FL",
+                "FU",
+                "FR",
+                "FD"
+            ],
+            [
+                "LF",
+                "UF",
+                "RF",
+                "DF"
+            ]
+        ],
+        "pieceRot": {
+            "90": [
+                "F"
+            ]
+        },
+        "gearRot": {
+            "90": [
+                "LD",
+                "LU",
+                "UL",
+                "UR",
+                "RU",
+                "RD",
+                "DR",
+                "DL"
+            ]
+        }
+    },
+    "B": {
+        "corners": [
+            "URB",
+            "ULB",
+            "DLB",
+            "DRB"
+        ],
+        "pieces": [
+            [
+                "R",
+                "RU",
+                "U",
+                "LU",
+                "L",
+                "LD",
+                "D",
+                "RD"
+            ],
+            [
+                "BU",
+                "BL",
+                "BD",
+                "BR"
+            ]
+        ],
+        "gears": [
+            [
+                "RD",
+                "RU",
+                "UR",
+                "UL",
+                "LU",
+                "LD",
+                "DL",
+                "DR"
+            ],
+            [
+                "BR",
+                "BU",
+                "BL",
+                "BD"
+            ],
+            [
+                "RB",
+                "UB",
+                "LB",
+                "DB"
+            ]
+        ],
+        "pieceRot": {
+            "90": [
+                "B"
+            ]
+        },
+        "gearRot": {
+            "90": [
+                "RD",
+                "RU",
+                "UR",
+                "UL",
+                "LU",
+                "LD",
+                "DL",
+                "DR"
+            ]
+        }
+    }
+}

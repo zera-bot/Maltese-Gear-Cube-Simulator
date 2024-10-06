@@ -1,31 +1,10 @@
-from turn_data import *
+import json
 
-x_rot = ["F","U","B","D"]
-y_rot = ["R","F","L","B"]
-z_rot = ["U","R","D","L"]
+# Get AllTurnData's resources
+turnData = {}
+with open("allTurnData.json") as d:
+    turnData = json.loads(d.read())
 
-def rotateAxes(origin,axes:list):
-    """
-    Format of `axes` is something like the following:
-    `[["y",1], ["x",-1], ["y",2]]`
-    """
-    prime = origin
-    for i in axes:
-        primeList = [*prime]
-
-        l = None
-        if i[0] == "x": l = x_rot
-        elif i[0] == "y": l = y_rot
-        elif i[0] == "z": l = z_rot
-
-        for charInd,char in enumerate(primeList):
-            if char not in l: continue
-            index = l.index(char)
-            new_index = (index + i[1]) % len(l)
-            primeList[charInd] = l[new_index]
-
-        prime = "".join(primeList)
-    return prime
 
 def countChanges(origin,prime):
     if isinstance(origin,list):
@@ -81,7 +60,6 @@ class TurnSequence:
             newseq.sequence.append(newturn)
         return newseq
 
-
 class Gear:
     def __init__(self,initialPosition,rotation=0):
         self.initialPosition = initialPosition
@@ -102,7 +80,6 @@ class Piece:
     
     def __repr__(self): return str(self)
         
-
 class Corner:
     def __init__(self,initialPosition):
         self.initialPosition = initialPosition
@@ -196,39 +173,14 @@ class Cube:
     def __repr__(self): return str(self)
 
     def executeTurn(self,turn):
-        tCorners = rTurnCorners.copy()
-        tPieces = rTurnPieces.copy()
-        tGears = rTurnGears.copy()
-        tPieceRot = rTurnPieceRotations.copy()
-        tGearRot = rTurnGearRotations.copy()
-        
-        # transform R lists
-        rotAxis = None
-        if turn.name == "F": 
-            # rotate all applicable lists by the sequence ( y )
-            rotAxis = [["y",1]]
-        elif turn.name == "B":
-            # rotate all applicable lists by the sequence ( y' )
-            rotAxis = [["y",-1]]
-        elif turn.name == "L":
-            # rotate all applicable lists by the sequence ( y2 )
-            rotAxis = [["y",2]]
-        elif turn.name == "U":
-            # rotate all applicable lists by the sequence ( z' )
-            rotAxis = [["z",-1]]
-        elif turn.name == "D":
-            # rotate all applicable lists by the sequence ( z )
-            rotAxis = [["z",1]]
-            
-        if rotAxis: 
-            tCorners = [self.adjust(rotateAxes(k,rotAxis),Corner) for k in tCorners]
-            tPieces = [ [self.adjust(rotateAxes(j,rotAxis),Piece) for j in k] for k in tPieces ]
-            tGears = [ [rotateAxes(j,rotAxis) for j in k] for k in tGears ]
-            tPieceRot = {key: [self.adjust(rotateAxes(k,rotAxis),Piece) for k in v] for key,v in tPieceRot.items()}
-            tGearRot = {key: [rotateAxes(k, rotAxis) for k in v] for key,v in tGearRot.items()}
-            
+        tCorners = turnData[turn.name]["corners"]
+        tPieces = turnData[turn.name]["pieces"]
+        tGears = turnData[turn.name]["gears"]
+        tPieceRot = turnData[turn.name]["pieceRot"]
+        tGearRot = turnData[turn.name]["gearRot"]
+
         # execute turn
-        #   corners
+        """#   corners
         res = self.corners.copy()
         for i in range(len(tCorners)):
             res[self.adjust(tCorners[i],Corner)] = self.corners[self.adjust(tCorners[(i - turn.amount)%len(tCorners)],Corner)]
@@ -252,13 +204,63 @@ class Cube:
         #       piece rotation
         for r, pieces in tPieceRot.items():
             for piece in pieces:
-                self.pieces[piece].rotation = (self.pieces[piece].rotation + r*turn.amount)%360
+                self.pieces[piece].rotation = (self.pieces[piece].rotation + int(r)*turn.amount)%360
         #       gear rotation
-        # DO GEAR ROTATIONS CHANGE BETWEEN SOMETHING LIKE L OR R?
         for r, gears in tGearRot.items():
             for gear in gears:
-                self.gears[gear].rotation = (self.gears[gear].rotation + r*turn.amount)%360
+                self.gears[gear].rotation = (self.gears[gear].rotation + int(r)*turn.amount)%360"""
         
+        # Corners
+        res = self.corners.copy()
+        length = len(tCorners)
+        shift_amount = turn.amount % length  # Precompute the shift
+
+        for i, tCorner in enumerate(tCorners):
+            source_key = tCorners[(i - shift_amount) % length]
+            target_key = tCorner
+            res[target_key] = self.corners[source_key]
+
+        self.corners = res
+
+        # Pieces
+        res = self.pieces.copy()
+        for l in tPieces:
+            length = len(l)
+            shift_amount = turn.amount % length  # Precompute the shift
+
+            for i, piece in enumerate(l):
+                source_key = l[(i - shift_amount) % length]
+                res[piece] = self.pieces[source_key]
+
+        self.pieces = res
+
+        # Gears
+        res = self.gears.copy()
+        for l in tGears:
+            length = len(l)
+            shift_amount = turn.amount % length  # Precompute the shift
+
+            for i, gear in enumerate(l):
+                source_key = l[(i - shift_amount) % length]
+                res[gear] = self.gears[source_key]
+
+        self.gears = res
+
+        # Piece Rotation
+        for r, pieces in tPieceRot.items():
+            rotation_amount = int(r) * turn.amount % 360  # Precompute the rotation
+            for piece in pieces:
+                self.pieces[piece].rotation = (self.pieces[piece].rotation + rotation_amount) % 360
+
+        # Gear Rotation
+        for r, gears in tGearRot.items():
+            rotation_amount = int(r) * turn.amount % 360  # Precompute the rotation
+            for gear in gears:
+                self.gears[gear].rotation = (self.gears[gear].rotation + rotation_amount) % 360
+
+
+
+
     
     def executeSequence(self,seq):
         if isinstance(seq,TurnSequence):
