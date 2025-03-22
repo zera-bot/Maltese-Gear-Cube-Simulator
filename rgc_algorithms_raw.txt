@@ -1,63 +1,4 @@
-from sim import Cube,Gear,Corner,Piece,Turn,TurnSequence, countChanges
-from itertools import product
-arrow = "->"
-
-
-def findGearCycles(cube:Cube):
-    gears = {k:v.initialPosition for k,v in cube.gears.items()}
-    cycles = []
-    for after,before in gears.items():
-        if after != before:
-            currentCycle = []
-            currentKey = after
-            currentCycle.append(currentKey)
-            currentKey = gears[currentKey]
-            
-            while currentKey != after:
-                currentCycle.append(currentKey)
-                currentKey = gears[currentKey]
-                
-            #currentCycle.append(currentKey)
-            cycles.append(list(reversed(currentCycle)))
-    
-    # delete duplicate cycles
-    for ind,cycle in enumerate(reversed(cycles)):
-        for jind,other in enumerate(cycles):
-            if {*cycle} == {*other}:
-                cycles.remove(other)
-    
-    return cycles
-    
-def findGearRotations(cube:Cube):
-    list90 = []
-    list180 = []
-    list270 = []
-    
-    for v in cube.gears.values():
-        if v.rotation == 90: list90.append(v.initialPosition)
-        elif v.rotation == 180: list180.append(v.initialPosition)
-        elif v.rotation == 270: list270.append(v.initialPosition)
-        
-    return [list90,list180,list270]
-    
-def cyclesString(cube:Cube):
-    cycles = ", ".join([f" {arrow} ".join(k) for k in findGearCycles(cube)])
-    cycles+="; "
-    rots = findGearRotations(cube)
-    
-    if len(rots[0]) > 0:
-        r = "" + ",".join(rots[0]) + " rotates 90; "
-        cycles+= r
-    if len(rots[1]) > 0:
-        r = "" + ", ".join(rots[1]) + " rotates 180; "
-        cycles+= r
-    if len(rots[2]) > 0:
-        r = "" + ", ".join(rots[2]) + " rotates -90; "
-        cycles+= r
-        
-    return cycles
-
-sequences = """R U R3 U
+R U R3 U
 R U R3 U'3
 R U R3 F
 R U R3 F'3
@@ -1592,62 +1533,484 @@ L'3 B'3 L3 B'3
 L'3 B'3 U3 B
 L'3 B'3 U3 B'3
 L'3 B'3 D3 B
-L'3 B'3 D3 B'3""".split("\n")
-
-final = ""
-XL = TurnSequence("R4 D R4 D' R4")
-XR = TurnSequence("R4 D' R4 D R4")
-
-YL = TurnSequence("R4")
-
-print(len(sequences))
-for mini in sequences:
-    A = TurnSequence(mini)
-    Aprime = A.reverse()
-
-    seq = A + YL + Aprime + YL.reverse()
-    #seq = (A + XL + Aprime + Aprime + XL + A)
-
-    cube = Cube()
-    cube.executeSequence(seq)
-    
-    final+=f"\n{str(A)} XL {str(Aprime)} XL -- " + cyclesString(cube)
-
-with open("summary.txt", "w") as f:
-    f.write(final)
-
-"""
-final+="A XL A' XL"
-print("A XL A' XL")
-for mini in sequences:
-    A = TurnSequence(mini)
-    Aprime = A.reverse()
-
-    seq = A + XL + Aprime + XL
-
-    cube = Cube()
-    cube.executeSequence(seq)
-    
-    final+=f"\n{str(A)} XL {str(Aprime)} XL -- " + cyclesString(cube)
-    
-final+="\n A' XL A XL"
-print("A' XL A XL")
-for mini in sequences:
-    A = TurnSequence(mini)
-    Aprime = A.reverse()
-
-    seq = Aprime + XL + A + XL
-
-    cube = Cube()
-    cube.executeSequence(seq)
-    
-    final+=f"\n{str(Aprime)} XL {str(A)} XL -- " + cyclesString(cube)
-
-cube = Cube()
-cube.executeSequence(TurnSequence("R2 U2 R4 U2' R2"))
-print(cyclesString(cube))
-
-#
-#with open("summary.txt", "w") as f:
-#    f.write(final)
-"""
+L'3 B'3 D3 B'3
+R U R3 U R
+R U R3 U R2
+R U R3 U R3
+R U R3 U R4
+R U R3 U R'
+R U R3 U R'2
+R U R3 U R'3
+R U R3 U L
+R U R3 U L2
+R U R3 U L3
+R U R3 U L4
+R U R3 U L'
+R U R3 U L'2
+R U R3 U L'3
+R U R3 U F4
+R U R3 U B4
+R U R3 U'3 R
+R U R3 U'3 R2
+R U R3 U'3 R3
+R U R3 U'3 R4
+R U R3 U'3 R'
+R U R3 U'3 R'2
+R U R3 U'3 R'3
+R U R3 U'3 L
+R U R3 U'3 L2
+R U R3 U'3 L3
+R U R3 U'3 L4
+R U R3 U'3 L'
+R U R3 U'3 L'2
+R U R3 U'3 L'3
+R U R3 U'3 F4
+R U R3 U'3 B4
+R U R3 F R
+R U R3 F R2
+R U R3 F R3
+R U R3 F R4
+R U R3 F R'
+R U R3 F R'2
+R U R3 F R'3
+R U R3 F L
+R U R3 F L2
+R U R3 F L3
+R U R3 F L4
+R U R3 F L'
+R U R3 F L'2
+R U R3 F L'3
+R U R3 F U4
+R U R3 F D4
+R U R3 F'3 R
+R U R3 F'3 R2
+R U R3 F'3 R3
+R U R3 F'3 R4
+R U R3 F'3 R'
+R U R3 F'3 R'2
+R U R3 F'3 R'3
+R U R3 F'3 L
+R U R3 F'3 L2
+R U R3 F'3 L3
+R U R3 F'3 L4
+R U R3 F'3 L'
+R U R3 F'3 L'2
+R U R3 F'3 L'3
+R U R3 F'3 U4
+R U R3 F'3 D4
+R U R4 F D3
+R U R4 F D'
+R U R4 B D3
+R U R4 B D'
+R U R' U4 B3
+R U R' U4 B'
+R U R' D4 B3
+R U R' D4 B'
+R U R' F4 D3
+R U R' F4 D'
+R U R' B4 D3
+R U R' B4 D'
+R U L3 U R
+R U L3 U R2
+R U L3 U R3
+R U L3 U R4
+R U L3 U R'
+R U L3 U R'2
+R U L3 U R'3
+R U L3 U L
+R U L3 U L2
+R U L3 U L3
+R U L3 U L4
+R U L3 U L'
+R U L3 U L'2
+R U L3 U L'3
+R U L3 U F4
+R U L3 U B4
+R U L3 U'3 R
+R U L3 U'3 R2
+R U L3 U'3 R3
+R U L3 U'3 R4
+R U L3 U'3 R'
+R U L3 U'3 R'2
+R U L3 U'3 R'3
+R U L3 U'3 L
+R U L3 U'3 L2
+R U L3 U'3 L3
+R U L3 U'3 L4
+R U L3 U'3 L'
+R U L3 U'3 L'2
+R U L3 U'3 L'3
+R U L3 U'3 F4
+R U L3 U'3 B4
+R U L3 B R
+R U L3 B R2
+R U L3 B R3
+R U L3 B R4
+R U L3 B R'
+R U L3 B R'2
+R U L3 B R'3
+R U L3 B L
+R U L3 B L2
+R U L3 B L3
+R U L3 B L4
+R U L3 B L'
+R U L3 B L'2
+R U L3 B L'3
+R U L3 B U4
+R U L3 B D4
+R U L3 B'3 R
+R U L3 B'3 R2
+R U L3 B'3 R3
+R U L3 B'3 R4
+R U L3 B'3 R'
+R U L3 B'3 R'2
+R U L3 B'3 R'3
+R U L3 B'3 L
+R U L3 B'3 L2
+R U L3 B'3 L3
+R U L3 B'3 L4
+R U L3 B'3 L'
+R U L3 B'3 L'2
+R U L3 B'3 L'3
+R U L3 B'3 U4
+R U L3 B'3 D4
+R U L4 F D3
+R U L4 F D'
+R U L4 B D3
+R U L4 B D'
+R U L' U4 F3
+R U L' U4 F'
+R U L' D4 F3
+R U L' D4 F'
+R U L' F4 D3
+R U L' F4 D'
+R U L' B4 D3
+R U L' B4 D'
+R U F3 U R
+R U F3 U R2
+R U F3 U R3
+R U F3 U R4
+R U F3 U R'
+R U F3 U R'2
+R U F3 U R'3
+R U F3 U L
+R U F3 U L2
+R U F3 U L3
+R U F3 U L4
+R U F3 U L'
+R U F3 U L'2
+R U F3 U L'3
+R U F3 U F4
+R U F3 U B4
+R U F3 U'3 R
+R U F3 U'3 R2
+R U F3 U'3 R3
+R U F3 U'3 R4
+R U F3 U'3 R'
+R U F3 U'3 R'2
+R U F3 U'3 R'3
+R U F3 U'3 L
+R U F3 U'3 L2
+R U F3 U'3 L3
+R U F3 U'3 L4
+R U F3 U'3 L'
+R U F3 U'3 L'2
+R U F3 U'3 L'3
+R U F3 U'3 F4
+R U F3 U'3 B4
+R U F4 R D3
+R U F4 R D'
+R U F4 R F3
+R U F4 R F'
+R U F4 L D3
+R U F4 L D'
+R U F4 L B3
+R U F4 L B'
+R U F' R4 D3
+R U F' R4 D'
+R U F' L4 D3
+R U F' L4 D'
+R U B3 U R
+R U B3 U R2
+R U B3 U R3
+R U B3 U R4
+R U B3 U R'
+R U B3 U R'2
+R U B3 U R'3
+R U B3 U L
+R U B3 U L2
+R U B3 U L3
+R U B3 U L4
+R U B3 U L'
+R U B3 U L'2
+R U B3 U L'3
+R U B3 U F4
+R U B3 U B4
+R U B3 U'3 R
+R U B3 U'3 R2
+R U B3 U'3 R3
+R U B3 U'3 R4
+R U B3 U'3 R'
+R U B3 U'3 R'2
+R U B3 U'3 R'3
+R U B3 U'3 L
+R U B3 U'3 L2
+R U B3 U'3 L3
+R U B3 U'3 L4
+R U B3 U'3 L'
+R U B3 U'3 L'2
+R U B3 U'3 L'3
+R U B3 U'3 F4
+R U B3 U'3 B4
+R U B4 R D3
+R U B4 R D'
+R U B4 R F3
+R U B4 R F'
+R U B4 L D3
+R U B4 L D'
+R U B4 L B3
+R U B4 L B'
+R U B' R4 D3
+R U B' R4 D'
+R U B' L4 D3
+R U B' L4 D'
+R U3 R U4 F
+R U3 R U4 F'3
+R U3 R D4 F
+R U3 R D4 F'3
+R U3 R F4 D
+R U3 R F4 D'3
+R U3 R B4 D
+R U3 R B4 D'3
+R U3 R4 F' D
+R U3 R4 F' D'3
+R U3 R4 B' D
+R U3 R4 B' D'3
+R U3 R'3 U3 R
+R U3 R'3 U3 R2
+R U3 R'3 U3 R3
+R U3 R'3 U3 R4
+R U3 R'3 U3 R'
+R U3 R'3 U3 R'2
+R U3 R'3 U3 R'3
+R U3 R'3 U3 L
+R U3 R'3 U3 L2
+R U3 R'3 U3 L3
+R U3 R'3 U3 L4
+R U3 R'3 U3 L'
+R U3 R'3 U3 L'2
+R U3 R'3 U3 L'3
+R U3 R'3 U3 F4
+R U3 R'3 U3 B4
+R U3 R'3 U' R
+R U3 R'3 U' R2
+R U3 R'3 U' R3
+R U3 R'3 U' R4
+R U3 R'3 U' R'
+R U3 R'3 U' R'2
+R U3 R'3 U' R'3
+R U3 R'3 U' L
+R U3 R'3 U' L2
+R U3 R'3 U' L3
+R U3 R'3 U' L4
+R U3 R'3 U' L'
+R U3 R'3 U' L'2
+R U3 R'3 U' L'3
+R U3 R'3 U' F4
+R U3 R'3 U' B4
+R U3 R'3 B3 R
+R U3 R'3 B3 R2
+R U3 R'3 B3 R3
+R U3 R'3 B3 R4
+R U3 R'3 B3 R'
+R U3 R'3 B3 R'2
+R U3 R'3 B3 R'3
+R U3 R'3 B3 L
+R U3 R'3 B3 L2
+R U3 R'3 B3 L3
+R U3 R'3 B3 L4
+R U3 R'3 B3 L'
+R U3 R'3 B3 L'2
+R U3 R'3 B3 L'3
+R U3 R'3 B3 U4
+R U3 R'3 B3 D4
+R U3 R'3 B' R
+R U3 R'3 B' R2
+R U3 R'3 B' R3
+R U3 R'3 B' R4
+R U3 R'3 B' R'
+R U3 R'3 B' R'2
+R U3 R'3 B' R'3
+R U3 R'3 B' L
+R U3 R'3 B' L2
+R U3 R'3 B' L3
+R U3 R'3 B' L4
+R U3 R'3 B' L'
+R U3 R'3 B' L'2
+R U3 R'3 B' L'3
+R U3 R'3 B' U4
+R U3 R'3 B' D4
+R U3 L U4 B
+R U3 L U4 B'3
+R U3 L D4 B
+R U3 L D4 B'3
+R U3 L F4 D
+R U3 L F4 D'3
+R U3 L B4 D
+R U3 L B4 D'3
+R U3 L4 F' D
+R U3 L4 F' D'3
+R U3 L4 B' D
+R U3 L4 B' D'3
+R U3 L'3 U3 R
+R U3 L'3 U3 R2
+R U3 L'3 U3 R3
+R U3 L'3 U3 R4
+R U3 L'3 U3 R'
+R U3 L'3 U3 R'2
+R U3 L'3 U3 R'3
+R U3 L'3 U3 L
+R U3 L'3 U3 L2
+R U3 L'3 U3 L3
+R U3 L'3 U3 L4
+R U3 L'3 U3 L'
+R U3 L'3 U3 L'2
+R U3 L'3 U3 L'3
+R U3 L'3 U3 F4
+R U3 L'3 U3 B4
+R U3 L'3 U' R
+R U3 L'3 U' R2
+R U3 L'3 U' R3
+R U3 L'3 U' R4
+R U3 L'3 U' R'
+R U3 L'3 U' R'2
+R U3 L'3 U' R'3
+R U3 L'3 U' L
+R U3 L'3 U' L2
+R U3 L'3 U' L3
+R U3 L'3 U' L4
+R U3 L'3 U' L'
+R U3 L'3 U' L'2
+R U3 L'3 U' L'3
+R U3 L'3 U' F4
+R U3 L'3 U' B4
+R U3 L'3 F3 R
+R U3 L'3 F3 R2
+R U3 L'3 F3 R3
+R U3 L'3 F3 R4
+R U3 L'3 F3 R'
+R U3 L'3 F3 R'2
+R U3 L'3 F3 R'3
+R U3 L'3 F3 L
+R U3 L'3 F3 L2
+R U3 L'3 F3 L3
+R U3 L'3 F3 L4
+R U3 L'3 F3 L'
+R U3 L'3 F3 L'2
+R U3 L'3 F3 L'3
+R U3 L'3 F3 U4
+R U3 L'3 F3 D4
+R U3 L'3 F' R
+R U3 L'3 F' R2
+R U3 L'3 F' R3
+R U3 L'3 F' R4
+R U3 L'3 F' R'
+R U3 L'3 F' R'2
+R U3 L'3 F' R'3
+R U3 L'3 F' L
+R U3 L'3 F' L2
+R U3 L'3 F' L3
+R U3 L'3 F' L4
+R U3 L'3 F' L'
+R U3 L'3 F' L'2
+R U3 L'3 F' L'3
+R U3 L'3 F' U4
+R U3 L'3 F' D4
+R U3 F R4 D
+R U3 F R4 D'3
+R U3 F L4 D
+R U3 F L4 D'3
+R U3 F4 R' D
+R U3 F4 R' D'3
+R U3 F4 R' B
+R U3 F4 R' B'3
+R U3 F4 L' D
+R U3 F4 L' D'3
+R U3 F4 L' F
+R U3 F4 L' F'3
+R U3 F'3 U3 R
+R U3 F'3 U3 R2
+R U3 F'3 U3 R3
+R U3 F'3 U3 R4
+R U3 F'3 U3 R'
+R U3 F'3 U3 R'2
+R U3 F'3 U3 R'3
+R U3 F'3 U3 L
+R U3 F'3 U3 L2
+R U3 F'3 U3 L3
+R U3 F'3 U3 L4
+R U3 F'3 U3 L'
+R U3 F'3 U3 L'2
+R U3 F'3 U3 L'3
+R U3 F'3 U3 F4
+R U3 F'3 U3 B4
+R U3 F'3 U' R
+R U3 F'3 U' R2
+R U3 F'3 U' R3
+R U3 F'3 U' R4
+R U3 F'3 U' R'
+R U3 F'3 U' R'2
+R U3 F'3 U' R'3
+R U3 F'3 U' L
+R U3 F'3 U' L2
+R U3 F'3 U' L3
+R U3 F'3 U' L4
+R U3 F'3 U' L'
+R U3 F'3 U' L'2
+R U3 F'3 U' L'3
+R U3 F'3 U' F4
+R U3 F'3 U' B4
+R U3 B R4 D
+R U3 B R4 D'3
+R U3 B L4 D
+R U3 B L4 D'3
+R U3 B4 R' D
+R U3 B4 R' D'3
+R U3 B4 R' B
+R U3 B4 R' B'3
+R U3 B4 L' D
+R U3 B4 L' D'3
+R U3 B4 L' F
+R U3 B4 L' F'3
+R U3 B'3 U3 R
+R U3 B'3 U3 R2
+R U3 B'3 U3 R3
+R U3 B'3 U3 R4
+R U3 B'3 U3 R'
+R U3 B'3 U3 R'2
+R U3 B'3 U3 R'3
+R U3 B'3 U3 L
+R U3 B'3 U3 L2
+R U3 B'3 U3 L3
+R U3 B'3 U3 L4
+R U3 B'3 U3 L'
+R U3 B'3 U3 L'2
+R U3 B'3 U3 L'3
+R U3 B'3 U3 F4
+R U3 B'3 U3 B4
+R U3 B'3 U' R
+R U3 B'3 U' R2
+R U3 B'3 U' R3
+R U3 B'3 U' R4
+R U3 B'3 U' R'
+R U3 B'3 U' R'2
+R U3 B'3 U' R'3
+R U3 B'3 U' L
+R U3 B'3 U' L2
+R U3 B'3 U' L3
+R U3 B'3 U' L4
+R U3 B'3 U' L'
+R U3 B'3 U' L'2
+R U3 B'3 U' L'3
+R U3 B'3 U' F4
+R U3 B'3 U' B4

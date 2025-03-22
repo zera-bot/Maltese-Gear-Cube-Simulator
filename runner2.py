@@ -7,7 +7,7 @@ XR = TurnSequence("R4 D' R4 D R4")
 W = TurnSequence("R4 U R4 U' R4 U R4 U' R4 U R4 U'")
 
 seq = Aprime + XR + A + A + XR + Aprime
-seq = TurnSequence("R")
+seq = TurnSequence("R U F3 U4 F'3 U' R3")
 
 cube = Cube()
 cube.executeSequence(seq)

@@ -17,6 +17,7 @@ def findGearRotations(cube:Cube):
 A  = TurnSequence("R U R' U' R' F R F'")
 A_PRIME = A.reverse()
 XL = TurnSequence("R4 D R4 D' R4")
+XR = TurnSequence("R4 D R4 D' R4") 
 
 allMoves = []
 for i in ["R","L","U","D","F","B"]:
@@ -43,7 +44,7 @@ while not stop:
 
         #total = seq + XL + seq.reverse() + XL
         #total = A + seq + A_PRIME + seq.reverse()
-        total = seq + XL + seq.reverse() + seq.reverse() + XL + seq
+        total = seq + XL + seq.reverse() + XL
         cube.executeSequence(total)
 
         cornerChanges = countChanges(defaultCube.corners,cube.corners)
@@ -63,14 +64,12 @@ while not stop:
             if k != v: noGearsChanged = False; break # remove break for other conditions
 
         if (gearRots%2==0 and gearRots!=0) and noGearsChanged:
-            print(seq)
+            print(seq, "rotation")
         #"""
 
-        """
         #if it's a 3 cycle
         if cornerChanges==0 and gearsChanges!=0 and gearsChanges<4:
-            print(seq)
-        """
+            print(seq, "3 cycle")
         
         """
         # if exactly two gears are rotated 90 or 270 degrees
